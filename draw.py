@@ -23,6 +23,9 @@ Round 5 adds the verified human cost to the standfirst (Russians and
 Libyans killed aboard the Mercury), the NBC report that the US military
 is weighing strikes on Iran's leaders, and a distant patrol boat on the
 hero art's horizon.
+Round 6 adds the fire's reflection shimmering on the water under the
+burning corvette, and tightens the numbers strip ("60 banks cut from
+SWIFT").
 Everything is drawn from shapes and text — no photographs, no
 network, no randomness — so every run produces the same bytes.
 """
@@ -133,6 +136,13 @@ def hero_art(draw, x0, y0, x1, y1):
         draw.ellipse([x0 + 430 + i * 5 - r, cy - r,
                       x0 + 430 + i * 5 + r, cy + r],
                      fill=(70, 70, 74))
+    # The fire's reflection shimmering on the water below the ship.
+    reflections = [(hull_y + 18, 96, (232, 120, 30)),
+                   (hull_y + 28, 72, (216, 100, 36)),
+                   (hull_y + 38, 48, (196, 84, 40))]
+    for wy, wdt, col in reflections:
+        draw.line([(x0 + 441 - wdt // 2, wy), (x0 + 441 + wdt // 2, wy)],
+                  fill=col, width=3)
     # A Ka-27 helicopter, damaged, trailing smoke — bigger, with a
     # clear rotor, tail boom and skids so it reads as a helicopter.
     hx, hy = x0 + 660, y0 + 46
@@ -306,7 +316,7 @@ def main():
            fill=GREY)
     stats = [("+31.5%", "Nvidia shares in a day"),
              ("50M", "children vaccinated in Bangladesh"),
-             ("60", "banks to lose SWIFT access"),
+             ("60", "banks cut from SWIFT"),
              ("$41bn", "Sanofi agrees to buy Insmed")]
     col = (rx - mx) // 4
     for i, (num, lab) in enumerate(stats):

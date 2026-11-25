@@ -14,7 +14,7 @@ One image that sums up the world's news on 24 November 2026, laid out as a newsp
 - **Europe** — the EU proposes its 22nd sanctions package: about 60 banks cut from SWIFT, 70+ shadow-fleet ships targeted.
 - **Asia** — a 72-hour truce holds on the Thai–Cambodia border after a 20-day border war that killed dozens and displaced close to a million; Thailand will free 18 Cambodian soldiers after 72 hours, with ASEAN observers verifying.
 
-A "day in numbers" strip (+31.5% Nvidia, 50M children vaccinated, 60 banks losing SWIFT, $41bn Sanofi–Insmed), a "Where the day happened" dateline (Benghazi, Kyiv, Tehran, Bangkok, Taipei) and the ticker add a Houthi attack wounding 11 at a Riyadh tower, a Hanoi restaurant blast killing 6, SoftBank's $2bn Intel investment, Sudan drone strikes damaging a UN building, and Kyiv saying Ukraine needs €115bn for 2027.
+A "day in numbers" strip (+31.5% Nvidia, 50M children vaccinated, 60 banks cut from SWIFT, $41bn Sanofi–Insmed), a "Where the day happened" dateline (Benghazi, Kyiv, Tehran, Bangkok, Taipei) and the ticker add a Houthi attack wounding 11 at a Riyadh tower, a Hanoi restaurant blast killing 6, SoftBank's $2bn Intel investment, Sudan drone strikes damaging a UN building, and Kyiv saying Ukraine needs €115bn for 2027.
 
 ## Run
 
