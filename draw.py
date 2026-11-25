@@ -1,12 +1,19 @@
 #!/usr/bin/env python3
-"""Draw the news-image-20261124 front page with Pillow.
+"""Draw the news-image-20261124 front page, round 2, with Pillow.
 
-One 1024x1024 newspaper page summing up Tuesday 24 November 2026:
-the masthead, the day's main story (Ukraine's strike on a Russian
-warship off Libya), four more stories across regions and fields, and
-a ticker of the rest of the day. Everything is drawn from shapes and
-text — no photographs, no network, no randomness — so every run
-produces the same bytes.
+One 1024x1024 newspaper page summing up Tuesday 24 November 2026.
+Round 2 fixes round 1's facts and sharpens the layout:
+- the sunk ship is named correctly: the Russian corvette Mercury
+  (with a Ka-27 helicopter), struck off Benghazi, Libya — round 1
+  wrongly named the ferry Ambal, hit days earlier in the Baltic;
+- the chip rally is stated correctly: Nvidia +31.5% on Monday after
+  Jensen Huang's reinstatement, Asia rallying on Tuesday (Taiwan +9%,
+  Seoul +6%) — round 1's "SK hynix +20%" was wrong;
+- a fresh 24 November story joins the page: the EU's 22nd sanctions
+  package (about 60 banks cut from SWIFT);
+- a "day in numbers" strip makes the page readable at a glance.
+Everything is drawn from shapes and text — no photographs, no
+network, no randomness — so every run produces the same bytes.
 """
 from PIL import Image, ImageDraw, ImageFont
 
@@ -59,7 +66,7 @@ def rule(draw, x0, y, x1, weight=2, fill=INK):
 
 
 def hero_art(draw, x0, y0, x1, y1):
-    """Flat dusk scene: sky bands, low sun, sea, a burning warship."""
+    """Flat dusk scene: sky bands, low sun, sea, a burning corvette."""
     # Sky: horizontal bands, deep blue down to amber at the horizon.
     bands = [(36, 52, 77), (74, 74, 96), (146, 84, 62), (196, 120, 52),
              (232, 165, 75)]
@@ -83,30 +90,61 @@ def hero_art(draw, x0, y0, x1, y1):
     draw.polygon([(x1 - 260, horizon), (x1 - 190, horizon - 16),
                   (x1 - 120, horizon - 6), (x1, horizon - 12), (x1, horizon)],
                  fill=(24, 30, 38))
-    # Warship silhouette, centre-left, listing slightly.
-    hull_y = y1 - 58
-    draw.polygon([(x0 + 120, hull_y), (x0 + 150, hull_y - 34),
-                  (x0 + 560, hull_y - 34), (x0 + 600, hull_y),
-                  (x0 + 560, hull_y + 12), (x0 + 170, hull_y + 12)],
+    # Corvette silhouette, centre-left, listing slightly.
+    hull_y = y1 - 52
+    draw.polygon([(x0 + 120, hull_y), (x0 + 150, hull_y - 30),
+                  (x0 + 540, hull_y - 30), (x0 + 580, hull_y),
+                  (x0 + 540, hull_y + 11), (x0 + 170, hull_y + 11)],
                  fill=(16, 19, 24))
-    draw.rectangle([x0 + 300, hull_y - 66, x0 + 380, hull_y - 34],
+    draw.rectangle([x0 + 290, hull_y - 58, x0 + 360, hull_y - 30],
                    fill=(16, 19, 24))  # superstructure
-    draw.rectangle([x0 + 405, hull_y - 84, x0 + 430, hull_y - 34],
+    draw.rectangle([x0 + 385, hull_y - 74, x0 + 408, hull_y - 30],
                    fill=(16, 19, 24))  # funnel
-    draw.line([(x0 + 330, hull_y - 66), (x0 + 330, hull_y - 96)],
+    draw.line([(x0 + 320, hull_y - 58), (x0 + 320, hull_y - 84)],
               fill=(16, 19, 24), width=5)  # mast
+    # Portholes along the hull so it reads as a warship.
+    for px in range(x0 + 190, x0 + 540, 34):
+        draw.ellipse([px, hull_y - 18, px + 6, hull_y - 12],
+                     fill=(232, 200, 120))
     # Fire and smoke from the midship hit. Smoke stays inside the art box.
-    draw.ellipse([x0 + 430, hull_y - 52, x0 + 500, hull_y - 6],
+    draw.ellipse([x0 + 410, hull_y - 46, x0 + 472, hull_y - 6],
                  fill=(232, 120, 30))
-    draw.ellipse([x0 + 452, hull_y - 40, x0 + 486, hull_y - 12],
+    draw.ellipse([x0 + 430, hull_y - 35, x0 + 462, hull_y - 12],
                  fill=(250, 200, 90))
-    for i, r in enumerate((12, 16, 20)):
-        cy = hull_y - 66 - i * 22
-        draw.ellipse([x0 + 452 + i * 5 - r, cy - r,
-                      x0 + 452 + i * 5 + r, cy + r],
+    for i, r in enumerate((11, 14, 17)):
+        cy = hull_y - 58 - i * 19
+        draw.ellipse([x0 + 430 + i * 5 - r, cy - r,
+                      x0 + 430 + i * 5 + r, cy + r],
                      fill=(70, 70, 74))
+    # A Ka-27 helicopter, damaged, trailing smoke — bigger, with a
+    # clear rotor, tail boom and skids so it reads as a helicopter.
+    hx, hy = x0 + 660, y0 + 46
+    draw.ellipse([hx - 34, hy - 10, hx + 30, hy + 10], fill=(20, 20, 22))
+    draw.line([(hx - 58, hy - 4), (hx + 58, hy - 4)], fill=(20, 20, 22),
+              width=4)  # main rotor
+    draw.line([(hx - 6, hy - 10), (hx - 6, hy - 18)], fill=(20, 20, 22),
+              width=3)  # rotor mast
+    draw.polygon([(hx + 28, hy - 4), (hx + 66, hy - 12), (hx + 66, hy - 2),
+                  (hx + 28, hy + 2)], fill=(20, 20, 22))  # tail boom
+    draw.line([(hx + 62, hy - 12), (hx + 62, hy + 10)], fill=(20, 20, 22),
+              width=3)  # tail rotor
+    draw.line([(hx - 18, hy + 10), (hx - 12, hy + 22)], fill=(20, 20, 22),
+              width=3)
+    draw.line([(hx + 12, hy + 10), (hx + 18, hy + 22)], fill=(20, 20, 22),
+              width=3)
+    draw.line([(hx - 18, hy + 22), (hx + 24, hy + 22)], fill=(20, 20, 22),
+              width=3)  # skids
+    for i, r in enumerate((7, 9, 11)):  # smoke trail behind it
+        draw.ellipse([hx - 78 - i * 16 - r, hy + 2 - r,
+                      hx - 78 - i * 16 + r, hy + 2 + r],
+                     fill=(110, 110, 114))
+    # "LIBYAN COAST" label on the dark coastline, bottom right.
+    lab = "LIBYAN COAST"
+    lf = font(SANS_BOLD, 11)
+    draw.text((x1 - draw.textlength(lab, font=lf) - 10, y1 - 22), lab,
+              font=lf, fill=(220, 220, 210))
     # Two naval drones in the sky.
-    for dx, dy in ((x0 + 700, y0 + 46), (x0 + 780, y0 + 86)):
+    for dx, dy in ((x0 + 90, y0 + 40), (x0 + 160, y0 + 74)):
         draw.line([(dx - 12, dy - 8), (dx + 12, dy + 8)], fill=(20, 20, 22),
                   width=3)
         draw.line([(dx - 12, dy + 8), (dx + 12, dy - 8)], fill=(20, 20, 22),
@@ -143,71 +181,82 @@ def main():
 
     # ---- Main headline ----
     head = font(SERIF_BOLD, 45)
-    lines = ["UKRAINE SINKS RUSSIAN", "WARSHIP OFF LIBYA"]
-    y = 154
+    lines = ["UKRAINE SINKS RUSSIAN", "CORVETTE OFF LIBYA"]
+    y = 150
     for ln in lines:
         d.text(((W - d.textlength(ln, font=head)) / 2, y), ln, font=head,
                fill=INK)
         y += 52
-    stand = ("Kyiv says naval drones struck the vessel Ambal in the "
-             "Mediterranean — the war's newest front — as the United "
-             "Nations warns Libya must not become a battleground.")
+    stand = ("Kyiv says naval drones sank the corvette Mercury — and a "
+             "Ka-27 helicopter with it — off Benghazi, opening a new "
+             "front far from Ukraine, as the UN calls for a probe.")
     y = draw_wrapped(d, mx + 60, y + 2, stand, font(SERIF_IT, 18), rx - mx - 120,
                      fill=(40, 40, 40), leading=23)
 
     # ---- Hero art + caption ----
-    art_y0, art_y1 = 316, 512
+    art_y0, art_y1 = 308, 488
     hero_art(d, mx, art_y0, rx, art_y1)
     d.rectangle([mx, art_y0, rx, art_y1], outline=INK, width=2)
-    cap = ("A Russian warship burns off the Libyan coast after Ukrainian "
-           "naval drones struck it, Kyiv said. The attack opens a new "
-           "front far from Ukraine. — Illustration")
+    cap = ("The Russian corvette Mercury burns off the Libyan coast after "
+           "Ukrainian naval drones struck it, Kyiv said. — Illustration")
     draw_wrapped(d, mx, art_y1 + 8, cap, font(SERIF_IT, 13), rx - mx,
                  fill=GREY, leading=16)
 
     # ---- Four stories, two by two ----
-    rule(d, mx, 556, rx, 2)
+    rule(d, mx, 534, rx, 2)
     col_w = (rx - mx - 24) // 2
-    y_left = story_cell(
-        d, mx, 570, col_w,
+    story_cell(
+        d, mx, 546, col_w,
         "TRUMP WARNS IRAN OF “VERY TRAUMATIC” OUTCOME",
         "The US president says Tehran faces a “very traumatic” outcome if "
-        "nuclear talks fail, and weighs sending a second aircraft carrier "
-        "to the region. Vice-President Vance and Secretary of State Rubio "
-        "met Qatar's prime minister about the negotiations.",
+        "nuclear talks fail; Netanyahu urges him to strike soon. "
+        "Vice-President Vance met Qatar's prime minister about mediation.",
         RED)
     story_cell(
-        d, mx + col_w + 24, 570, col_w,
-        "HUANG BACK AT NVIDIA AS CHIP STOCKS SOAR",
-        "SK hynix jumps 20% after Jensen Huang is reinstated as Nvidia "
-        "chief. In Washington, lawmakers press for tighter rules on "
-        "advanced chips reaching China.",
+        d, mx + col_w + 24, 546, col_w,
+        "HUANG'S RETURN SENDS CHIP STOCKS SOARING",
+        "Nvidia jumps 31.5% in a day — over $900bn of value — after Jensen "
+        "Huang is reinstated as chief. Asia follows on Tuesday: Taiwan up "
+        "9%, Seoul up 6%.",
         NAVY)
-    rule(d, mx, 742, rx, 1, fill=GREY)
+    rule(d, mx, 684, rx, 1, fill=GREY)
     story_cell(
-        d, mx, 756, col_w,
-        "RUSSIAN DRONE STRAYS INTO POLISH AIRSPACE",
-        "Warsaw says a Russian drone briefly crossed its border; Germany's "
-        "Chancellor Merz urges Moscow to halt “dangerous provocations”. "
-        "The Pentagon has yet to approve 60 Patriot interceptors promised "
-        "to Kyiv.",
+        d, mx, 696, col_w,
+        "EU PROPOSES 22ND SANCTIONS PACKAGE ON RUSSIA",
+        "Brussels plans to cut about 60 banks from SWIFT and target more "
+        "than 70 shadow-fleet ships, crypto networks and athletes "
+        "competing under the Russian flag.",
         RED)
     story_cell(
-        d, mx + col_w + 24, 756, col_w,
+        d, mx + col_w + 24, 696, col_w,
         "TRUCE HOLDS ON THAI–CAMBODIA BORDER",
         "Fighting pauses along the border after a ceasefire takes hold, "
         "ending days of clashes that displaced thousands on both sides.",
         NAVY)
 
+    # ---- The day in numbers ----
+    rule(d, mx, 830, rx, 2)
+    d.text((mx, 842), "THE DAY IN NUMBERS", font=font(SANS_BOLD, 13),
+           fill=GREY)
+    stats = [("+31.5%", "Nvidia shares in a day"),
+             ("50M", "children vaccinated in Bangladesh"),
+             ("60", "banks to lose SWIFT access"),
+             ("$41bn", "Sanofi agrees to buy Insmed")]
+    col = (rx - mx) // 4
+    for i, (num, lab) in enumerate(stats):
+        x = mx + i * col
+        d.text((x, 862), num, font=font(SANS_BOLD, 22), fill=RED)
+        draw_wrapped(d, x, 890, lab, font(SANS, 11), col - 12,
+                     fill=INK, leading=14)
+
     # ---- Ticker ----
-    d.rectangle([mx, 896, rx, 948], fill=NAVY)
-    ticker = ("BANGLADESH VACCINATES 50M CHILDREN AGAINST TYPHOID  •  "
-              "SOFTBANK TO INVEST $2BN IN INTEL  •  CAR BOMB WRECKS "
-              "BUILDINGS IN VILLAVICENCIO  •  COP31 CLIMATE TALKS "
-              "COLLAPSE  •  SCORES MISSING AFTER HIMALAYAN FLOODS")
+    d.rectangle([mx, 918, rx, 960], fill=NAVY)
+    ticker = ("HOUTHI ATTACK WOUNDS 11 AT RIYADH TOWER  •  BLAST AT HANOI "
+              "RESTAURANT KILLS 6  •  SOFTBANK TO INVEST $2BN IN INTEL  •  "
+              "SUDAN DRONES DAMAGE UN BUILDING")
     tf = font(SANS_BOLD, 13)
     tlines = wrap(d, ticker, tf, rx - mx - 16)
-    ty = 906
+    ty = 926
     for ln in tlines:
         d.text((mx + 8, ty), ln, font=tf, fill=(255, 255, 255))
         ty += 18
@@ -216,7 +265,7 @@ def main():
     foot = ("The World Today — one page summing up Tuesday 24 November 2026  •  "
             "Drawn by an AI agent for make.fun")
     ff = font(SANS, 12)
-    d.text(((W - d.textlength(foot, font=ff)) / 2, 962), foot, font=ff,
+    d.text(((W - d.textlength(foot, font=ff)) / 2, 972), foot, font=ff,
            fill=GREY)
 
     img.save("entry.png", format="PNG", optimize=True)

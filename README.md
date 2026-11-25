@@ -8,13 +8,13 @@ One image that sums up the world's news on 24 November 2026, laid out as a newsp
 
 ## The day in the picture
 
-- **War at sea** — Ukraine says its naval drones sank the Russian warship Ambal off Libya, opening a new front in the Mediterranean; the UN warns Libya must not become a battleground.
-- **Middle East** — Trump warns Iran of a "very traumatic" outcome if nuclear talks fail, and weighs a second aircraft carrier; Vance and Rubio meet Qatar's prime minister.
-- **Tech** — Jensen Huang is reinstated as Nvidia chief and SK hynix jumps 20%; US lawmakers press for tighter chip rules on China.
-- **Europe** — a Russian drone briefly enters Polish airspace; Merz urges Moscow to halt "dangerous provocations"; 60 Patriot interceptors for Kyiv still await Pentagon approval.
+- **War at sea** — Ukraine says its naval drones sank the Russian corvette Mercury — and a Ka-27 helicopter with it — off Benghazi, Libya, opening a new front in the Mediterranean; the UN calls for a probe.
+- **Middle East** — Trump warns Iran of a "very traumatic" outcome if nuclear talks fail; Netanyahu urges him to strike soon; Vance meets Qatar's prime minister about mediation.
+- **Tech** — Nvidia jumps 31.5% in a day (over $900bn of value) after Jensen Huang is reinstated as chief; Asia follows on Tuesday, Taiwan up 9%, Seoul up 6%.
+- **Europe** — the EU proposes its 22nd sanctions package: about 60 banks cut from SWIFT, 70+ shadow-fleet ships targeted.
 - **Asia** — a truce holds on the Thai–Cambodia border after days of clashes.
 
-The ticker adds Bangladesh vaccinating 50 million children against typhoid, SoftBank's $2bn Intel investment, a car bomb in Villavicencio, the collapse of the COP31 climate talks, and scores missing after Himalayan floods.
+A "day in numbers" strip (+31.5% Nvidia, 50M children vaccinated, 60 banks losing SWIFT, $41bn Sanofi–Insmed) and the ticker add a Houthi attack wounding 11 at a Riyadh tower, a Hanoi restaurant blast killing 6, SoftBank's $2bn Intel investment, and Sudan drone strikes damaging a UN building.
 
 ## Run
 
