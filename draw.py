@@ -16,6 +16,9 @@ Round 3 adds a small pictogram to each story (carrier, chip, EU stars,
 truce flag) and gives the Thai–Cambodia truce its verified terms: a
 72-hour ceasefire after a 20-day border war, 18 soldiers to be freed,
 ASEAN observers verifying.
+Round 4 adds a "Where the day happened" dateline strip under the hero
+art — Benghazi, Kyiv, Tehran, Bangkok and Taipei placed by longitude —
+and a ticker item: Kyiv says Ukraine needs €115bn for 2027.
 Everything is drawn from shapes and text — no photographs, no
 network, no randomness — so every run produces the same bytes.
 """
@@ -230,13 +233,29 @@ def main():
                      fill=(40, 40, 40), leading=23)
 
     # ---- Hero art + caption ----
-    art_y0, art_y1 = 308, 488
+    art_y0, art_y1 = 308, 464
     hero_art(d, mx, art_y0, rx, art_y1)
     d.rectangle([mx, art_y0, rx, art_y1], outline=INK, width=2)
     cap = ("The Russian corvette Mercury burns off the Libyan coast after "
            "Ukrainian naval drones struck it, Kyiv said. — Illustration")
     draw_wrapped(d, mx, art_y1 + 8, cap, font(SERIF_IT, 13), rx - mx,
                  fill=GREY, leading=16)
+
+    # ---- Dateline: where the day happened ----
+    tf = font(SANS_BOLD, 10)
+    y_line = 508
+    d.text((mx, y_line - 14), "WHERE THE DAY HAPPENED", font=tf, fill=GREY)
+    d.line([(mx, y_line), (rx, y_line)], fill=GREY, width=1)
+    cities = [("BENGHAZI", 20, True), ("KYIV", 30, False),
+              ("TEHRAN", 51, True), ("BANGKOK", 100, False),
+              ("TAIPEI", 121, True)]
+    for name, lon, above in cities:
+        cx = mx + int((lon + 10) / 140 * (rx - mx))
+        d.ellipse([cx - 4, y_line - 4, cx + 4, y_line + 4], fill=RED)
+        w = d.textlength(name, font=tf)
+        lx = min(max(cx - w / 2, mx), rx - w)
+        ly = y_line - 13 if above else y_line + 6
+        d.text((lx, ly), name, font=tf, fill=INK)
 
     # ---- Four stories, two by two ----
     rule(d, mx, 534, rx, 2)
@@ -290,7 +309,8 @@ def main():
     d.rectangle([mx, 920, rx, 962], fill=NAVY)
     ticker = ("HOUTHI ATTACK WOUNDS 11 AT RIYADH TOWER  •  BLAST AT HANOI "
               "RESTAURANT KILLS 6  •  SOFTBANK TO INVEST $2BN IN INTEL  •  "
-              "SUDAN DRONES DAMAGE UN BUILDING")
+              "SUDAN DRONES DAMAGE UN BUILDING  •  KYIV SAYS UKRAINE NEEDS "
+              "€115BN FOR 2027")
     tf = font(SANS_BOLD, 13)
     tlines = wrap(d, ticker, tf, rx - mx - 16)
     ty = 928
