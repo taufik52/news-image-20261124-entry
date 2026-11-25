@@ -12,6 +12,10 @@ Round 2 fixes round 1's facts and sharpens the layout:
 - a fresh 24 November story joins the page: the EU's 22nd sanctions
   package (about 60 banks cut from SWIFT);
 - a "day in numbers" strip makes the page readable at a glance.
+Round 3 adds a small pictogram to each story (carrier, chip, EU stars,
+truce flag) and gives the Thai–Cambodia truce its verified terms: a
+72-hour ceasefire after a 20-day border war, 18 soldiers to be freed,
+ASEAN observers verifying.
 Everything is drawn from shapes and text — no photographs, no
 network, no randomness — so every run produces the same bytes.
 """
@@ -152,11 +156,43 @@ def hero_art(draw, x0, y0, x1, y1):
         draw.ellipse([dx - 4, dy - 4, dx + 4, dy + 4], fill=(20, 20, 22))
 
 
-def story_cell(draw, x, y, w, head, body, accent):
-    draw.rectangle([x, y, x + w, y + 5], fill=accent)
-    y = draw_wrapped(draw, x, y + 12, head, font(SERIF_BOLD, 21), w,
-                     leading=25)
-    y = draw_wrapped(draw, x, y + 4, body, font(SERIF, 15), w, leading=19)
+def icon(draw, kind, x, y, colour):
+    """Small flat pictogram (26x26 box at x, y) for a story cell."""
+    if kind == "carrier":  # aircraft carrier
+        draw.polygon([(x, y + 16), (x + 4, y + 10), (x + 22, y + 10),
+                      (x + 26, y + 16), (x + 22, y + 19), (x + 4, y + 19)],
+                     fill=colour)
+        draw.rectangle([x + 15, y + 3, x + 19, y + 10], fill=colour)
+        draw.line([(x + 17, y + 3), (x + 17, y - 1)], fill=colour, width=2)
+    elif kind == "chip":  # microchip
+        draw.rectangle([x + 4, y + 4, x + 22, y + 22], outline=colour,
+                       width=2)
+        draw.rectangle([x + 10, y + 10, x + 16, y + 16], fill=colour)
+        for px in (x + 8, x + 13, x + 18):
+            draw.line([(px, y), (px, y + 4)], fill=colour, width=2)
+            draw.line([(px, y + 22), (px, y + 26)], fill=colour, width=2)
+            draw.line([(x, y + px - x), (x + 4, y + px - x)], fill=colour,
+                      width=2)
+            draw.line([(x + 22, y + px - x), (x + 26, y + px - x)],
+                      fill=colour, width=2)
+    elif kind == "stars":  # circle of stars (EU)
+        import math
+        for k in range(12):
+            a = 2 * math.pi * k / 12 - math.pi / 2
+            cx, cy = x + 13 + 9 * math.cos(a), y + 13 + 9 * math.sin(a)
+            draw.ellipse([cx - 2, cy - 2, cx + 2, cy + 2], fill=colour)
+    elif kind == "flag":  # white-flag truce
+        draw.line([(x + 6, y + 2), (x + 6, y + 24)], fill=colour, width=2)
+        draw.polygon([(x + 6, y + 2), (x + 24, y + 6), (x + 6, y + 11)],
+                     fill=colour)
+
+
+def story_cell(draw, x, y, w, head, body, accent, kind):
+    icon(draw, kind, x, y, accent)
+    draw.rectangle([x + 34, y + 10, x + w, y + 15], fill=accent)
+    y = draw_wrapped(draw, x, y + 32, head, font(SERIF_BOLD, 21), w,
+                     leading=24)
+    y = draw_wrapped(draw, x, y + 4, body, font(SERIF, 15), w, leading=18)
     return y
 
 
@@ -211,32 +247,33 @@ def main():
         "The US president says Tehran faces a “very traumatic” outcome if "
         "nuclear talks fail; Netanyahu urges him to strike soon. "
         "Vice-President Vance met Qatar's prime minister about mediation.",
-        RED)
+        RED, "carrier")
     story_cell(
         d, mx + col_w + 24, 546, col_w,
         "HUANG'S RETURN SENDS CHIP STOCKS SOARING",
         "Nvidia jumps 31.5% in a day — over $900bn of value — after Jensen "
         "Huang is reinstated as chief. Asia follows on Tuesday: Taiwan up "
         "9%, Seoul up 6%.",
-        NAVY)
-    rule(d, mx, 684, rx, 1, fill=GREY)
+        NAVY, "chip")
+    rule(d, mx, 686, rx, 1, fill=GREY)
     story_cell(
         d, mx, 696, col_w,
         "EU PROPOSES 22ND SANCTIONS PACKAGE ON RUSSIA",
         "Brussels plans to cut about 60 banks from SWIFT and target more "
         "than 70 shadow-fleet ships, crypto networks and athletes "
         "competing under the Russian flag.",
-        RED)
+        RED, "stars")
     story_cell(
         d, mx + col_w + 24, 696, col_w,
         "TRUCE HOLDS ON THAI–CAMBODIA BORDER",
-        "Fighting pauses along the border after a ceasefire takes hold, "
-        "ending days of clashes that displaced thousands on both sides.",
-        NAVY)
+        "A 72-hour ceasefire ends a 20-day border war that killed dozens "
+        "and displaced close to a million. Thailand will free 18 soldiers "
+        "after 72 hours; ASEAN observers verify the truce.",
+        NAVY, "flag")
 
     # ---- The day in numbers ----
-    rule(d, mx, 830, rx, 2)
-    d.text((mx, 842), "THE DAY IN NUMBERS", font=font(SANS_BOLD, 13),
+    rule(d, mx, 834, rx, 2)
+    d.text((mx, 846), "THE DAY IN NUMBERS", font=font(SANS_BOLD, 13),
            fill=GREY)
     stats = [("+31.5%", "Nvidia shares in a day"),
              ("50M", "children vaccinated in Bangladesh"),
@@ -245,18 +282,18 @@ def main():
     col = (rx - mx) // 4
     for i, (num, lab) in enumerate(stats):
         x = mx + i * col
-        d.text((x, 862), num, font=font(SANS_BOLD, 22), fill=RED)
-        draw_wrapped(d, x, 890, lab, font(SANS, 11), col - 12,
+        d.text((x, 866), num, font=font(SANS_BOLD, 22), fill=RED)
+        draw_wrapped(d, x, 894, lab, font(SANS, 11), col - 12,
                      fill=INK, leading=14)
 
     # ---- Ticker ----
-    d.rectangle([mx, 918, rx, 960], fill=NAVY)
+    d.rectangle([mx, 920, rx, 962], fill=NAVY)
     ticker = ("HOUTHI ATTACK WOUNDS 11 AT RIYADH TOWER  •  BLAST AT HANOI "
               "RESTAURANT KILLS 6  •  SOFTBANK TO INVEST $2BN IN INTEL  •  "
               "SUDAN DRONES DAMAGE UN BUILDING")
     tf = font(SANS_BOLD, 13)
     tlines = wrap(d, ticker, tf, rx - mx - 16)
-    ty = 926
+    ty = 928
     for ln in tlines:
         d.text((mx + 8, ty), ln, font=tf, fill=(255, 255, 255))
         ty += 18
