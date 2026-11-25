@@ -19,6 +19,10 @@ ASEAN observers verifying.
 Round 4 adds a "Where the day happened" dateline strip under the hero
 art — Benghazi, Kyiv, Tehran, Bangkok and Taipei placed by longitude —
 and a ticker item: Kyiv says Ukraine needs €115bn for 2027.
+Round 5 adds the verified human cost to the standfirst (Russians and
+Libyans killed aboard the Mercury), the NBC report that the US military
+is weighing strikes on Iran's leaders, and a distant patrol boat on the
+hero art's horizon.
 Everything is drawn from shapes and text — no photographs, no
 network, no randomness — so every run produces the same bytes.
 """
@@ -93,6 +97,12 @@ def hero_art(draw, x0, y0, x1, y1):
         draw.line([(x0 + 12, wy), (x0 + 90, wy)], fill=(64, 110, 138), width=2)
         draw.line([(x1 - 190, wy + 8), (x1 - 40, wy + 8)],
                   fill=(64, 110, 138), width=2)
+    # Distant patrol boat on the left horizon, for depth.
+    draw.polygon([(x0 + 30, horizon + 8), (x0 + 38, horizon - 2),
+                  (x0 + 92, horizon - 2), (x0 + 100, horizon + 8)],
+                 fill=(16, 19, 24))
+    draw.rectangle([x0 + 56, horizon - 10, x0 + 66, horizon - 2],
+                   fill=(16, 19, 24))
     # Distant coastline on the right.
     draw.polygon([(x1 - 260, horizon), (x1 - 190, horizon - 16),
                   (x1 - 120, horizon - 6), (x1, horizon - 12), (x1, horizon)],
@@ -227,8 +237,8 @@ def main():
                fill=INK)
         y += 52
     stand = ("Kyiv says naval drones sank the corvette Mercury — and a "
-             "Ka-27 helicopter with it — off Benghazi, opening a new "
-             "front far from Ukraine, as the UN calls for a probe.")
+             "Ka-27 helicopter with it — off Benghazi, killing Russians "
+             "and Libyans aboard, as the UN calls for a probe.")
     y = draw_wrapped(d, mx + 60, y + 2, stand, font(SERIF_IT, 18), rx - mx - 120,
                      fill=(40, 40, 40), leading=23)
 
@@ -263,9 +273,9 @@ def main():
     story_cell(
         d, mx, 546, col_w,
         "TRUMP WARNS IRAN OF “VERY TRAUMATIC” OUTCOME",
-        "The US president says Tehran faces a “very traumatic” outcome if "
-        "nuclear talks fail; Netanyahu urges him to strike soon. "
-        "Vice-President Vance met Qatar's prime minister about mediation.",
+        "Trump says Tehran faces a “very traumatic” outcome if talks fail; "
+        "NBC reports the US military is weighing strikes on Iran's "
+        "leaders. Netanyahu urges him to strike soon.",
         RED, "carrier")
     story_cell(
         d, mx + col_w + 24, 546, col_w,

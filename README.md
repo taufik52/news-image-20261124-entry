@@ -8,8 +8,8 @@ One image that sums up the world's news on 24 November 2026, laid out as a newsp
 
 ## The day in the picture
 
-- **War at sea** — Ukraine says its naval drones sank the Russian corvette Mercury — and a Ka-27 helicopter with it — off Benghazi, Libya, opening a new front in the Mediterranean; the UN calls for a probe.
-- **Middle East** — Trump warns Iran of a "very traumatic" outcome if nuclear talks fail; Netanyahu urges him to strike soon; Vance meets Qatar's prime minister about mediation.
+- **War at sea** — Ukraine says its naval drones sank the Russian corvette Mercury — and a Ka-27 helicopter with it — off Benghazi, Libya, killing Russians and Libyans aboard; the UN calls for a probe.
+- **Middle East** — Trump warns Iran of a "very traumatic" outcome if nuclear talks fail; NBC reports the US military is weighing strikes on Iran's leaders; Netanyahu urges him to strike soon.
 - **Tech** — Nvidia jumps 31.5% in a day (over $900bn of value) after Jensen Huang is reinstated as chief; Asia follows on Tuesday, Taiwan up 9%, Seoul up 6%.
 - **Europe** — the EU proposes its 22nd sanctions package: about 60 banks cut from SWIFT, 70+ shadow-fleet ships targeted.
 - **Asia** — a 72-hour truce holds on the Thai–Cambodia border after a 20-day border war that killed dozens and displaced close to a million; Thailand will free 18 Cambodian soldiers after 72 hours, with ASEAN observers verifying.
