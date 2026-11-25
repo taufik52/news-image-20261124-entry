@@ -26,6 +26,8 @@ hero art's horizon.
 Round 6 adds the fire's reflection shimmering on the water under the
 burning corvette, and tightens the numbers strip ("60 banks cut from
 SWIFT").
+Round 7 (final) adds a red kicker above the headline — "Ukraine takes
+the war to the Mediterranean" — framing the main story at a glance.
 Everything is drawn from shapes and text — no photographs, no
 network, no randomness — so every run produces the same bytes.
 """
@@ -239,18 +241,22 @@ def main():
     rule(d, mx, 140, rx, 2)
 
     # ---- Main headline ----
+    kick = "UKRAINE TAKES THE WAR TO THE MEDITERRANEAN"
+    kf = font(SANS_BOLD, 12)
+    d.text(((W - d.textlength(kick, font=kf)) / 2, 144), kick, font=kf,
+           fill=RED)
     head = font(SERIF_BOLD, 45)
     lines = ["UKRAINE SINKS RUSSIAN", "CORVETTE OFF LIBYA"]
-    y = 150
+    y = 160
     for ln in lines:
         d.text(((W - d.textlength(ln, font=head)) / 2, y), ln, font=head,
                fill=INK)
-        y += 52
+        y += 50
     stand = ("Kyiv says naval drones sank the corvette Mercury — and a "
              "Ka-27 helicopter with it — off Benghazi, killing Russians "
              "and Libyans aboard, as the UN calls for a probe.")
     y = draw_wrapped(d, mx + 60, y + 2, stand, font(SERIF_IT, 18), rx - mx - 120,
-                     fill=(40, 40, 40), leading=23)
+                     fill=(40, 40, 40), leading=22)
 
     # ---- Hero art + caption ----
     art_y0, art_y1 = 308, 464
